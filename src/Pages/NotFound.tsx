@@ -1,12 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import "../Styles/NotFound.css"
-const NotFound = () =>
-{
+import React from "react";
+import { Link } from "react-router-dom";
+import "../Styles/NotFound.css";
+const NotFound = () => {
   return (
     <div className="not-found-container">
       <h1>Sorry, the page you were looking for was not found.</h1>
-      <Link to="/" className="link-button">Return to Home</Link>
+      <Link to="/" className="link-button">
+        Return to Home
+      </Link>
     </div>
   );
 };

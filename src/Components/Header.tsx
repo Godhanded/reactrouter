@@ -1,25 +1,31 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import { NavLink } from "react-router-dom";
 
-const Header = () =>
-{
+const Header = () => {
   return (
     <header>
-      <NavLink className="site-logo" to=".">#VanLife</NavLink>
+      <NavLink className="site-logo" to=".">
+        #VanLife
+      </NavLink>
       <nav>
         <NavLink
           to="host"
-          className={({ isActive }) => isActive ? "my-link" : ""}
-
-        >Host</NavLink>
-        <NavLink to="about"
-          className={({ isActive }) => isActive ? "my-link" : ""}
-
-        >About</NavLink>
-        <NavLink to="/vans"
-          className={({ isActive }) => isActive ? "my-link" : ""}
-
-        >Vans</NavLink>
+          className={({ isActive }) => (isActive ? "my-link" : "")}
+        >
+          Host
+        </NavLink>
+        <NavLink
+          to="about"
+          className={({ isActive }) => (isActive ? "my-link" : "")}
+        >
+          About
+        </NavLink>
+        <NavLink
+          to="/vans"
+          className={({ isActive }) => (isActive ? "my-link" : "")}
+        >
+          Vans
+        </NavLink>
       </nav>
     </header>
   );
