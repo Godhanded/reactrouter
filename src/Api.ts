@@ -1,4 +1,6 @@
-export const getVans = async () => {
+import { Van } from "./types";
+
+export const getVans = async (): Promise<Van[]> => {
   let response: Response = await fetch("/api/vans");
 
   if (!response.ok) {
@@ -9,5 +11,5 @@ export const getVans = async () => {
     };
   }
 
-  return await response.json();
+  return (await response.json()).vans as Van[];
 };
