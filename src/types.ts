@@ -7,3 +7,9 @@ export type Van = {
   type: string;
   hostId: number;
 };
+
+export type Error = {
+  message: string;
+  statusText: string;
+  status: number;
+};

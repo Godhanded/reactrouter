@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from "react";
 import "../../Styles/Vans.css";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useLoaderData } from "react-router-dom";
 import { Van } from "../../types";
 import { getVans } from "../../Api";
 
+export const loader = () => getVans();
 const Vans = () => {
-  const [vans, setVans] = useState<Van[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  // const [vans, setVans] = useState<Van[]>([]);
+  // const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
+  const vans = useLoaderData() as Van[];
   const [searchParams, setSearchParams] = useSearchParams();
+
   const typeFilter = searchParams.get("type");
 
-  useEffect(() => {
-    const loadVans = async () => {
-      setLoading(true);
-      try {
-        const data = await getVans();
-        setVans(() => data.vans as Van[]);
-      } catch (e) {
-        console.log(e);
-        setError(e);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadVans();
-  }, []);
+  // useEffect(() => {
+  //   const loadVans = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const data = await getVans();
+  //       setVans(() => data.vans as Van[]);
+  //     } catch (e) {
+  //       console.log(e);
+  //       setError(e);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   loadVans();
+  // }, []);
 
   const handleFilterChange = (key: string, value: string | null): void => {
     setSearchParams((prevParams) => {
@@ -37,7 +40,6 @@ const Vans = () => {
       return prevParams;
     });
   };
-  console.log(vans);
   const displayedVans: Van[] = typeFilter
     ? vans.filter((van) => van.type.toLowerCase() === typeFilter)
     : vans;
@@ -63,9 +65,9 @@ const Vans = () => {
     </div>
   ));
 
-  if (loading) {
-    return <h1 aria-live="polite">Loading...</h1>;
-  }
+  // if (loading) {
+  //   return <h1 aria-live="polite">Loading...</h1>;
+  // }
   if (error) {
     return <h1 aria-live="assertive">there was an error: {error.message} </h1>;
   }
