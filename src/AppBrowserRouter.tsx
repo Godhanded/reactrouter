@@ -22,35 +22,35 @@ import VanDetailsBrowserRouter from "./Pages/Vans/VanDetailsBrowserRouter";
 import HostVanDetailsBrowserRouter from "./Pages/Host/HostVanDetailsBrowserRouter";
 
 function AppBrowserRouter() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="About" element={<About />} />
-          <Route path="login" element={<Login />} />
-          <Route path="host" element={<HostLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="income" element={<Income />} />
-            <Route path="reviews" element={<Reviews />} />
-            <Route path="vans" element={<HostVansBrowserRouter />} />
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route element={<Layout />}>
+					<Route path="/" element={<Home />} />
+					<Route path="About" element={<About />} />
+					<Route path="login" element={<Login />} />
+					<Route path="host" element={<HostLayout />}>
+						<Route index element={<Dashboard />} />
+						<Route path="income" element={<Income />} />
+						<Route path="reviews" element={<Reviews />} />
+						<Route path="vans" element={<HostVansBrowserRouter />} />
 
-            <Route path="vans/:id" element={<HostVanDetailsBrowserRouter />}>
-              <Route index element={<VanHostDetail />} />
-              <Route path="pricing" element={<VanPricing />} />
-              <Route path="photos" element={<VanPhotos />} />
-            </Route>
-          </Route>
-          <Route path="vans" element={<VansBrowserRouter />} />
-          <Route path="/vans/:id" element={<VanDetailsBrowserRouter />} />
-          <Route element={<AuthGuard />}>
-            <Route path="protected" element={<h1>Super secret info here</h1>} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+						<Route path="vans/:id" element={<HostVanDetailsBrowserRouter />}>
+							<Route index element={<VanHostDetail />} />
+							<Route path="pricing" element={<VanPricing />} />
+							<Route path="photos" element={<VanPhotos />} />
+						</Route>
+					</Route>
+					<Route path="vans" element={<VansBrowserRouter />} />
+					<Route path="/vans/:id" element={<VanDetailsBrowserRouter />} />
+					<Route element={<AuthGuard />}>
+						<Route path="protected" element={<h1>Super secret info here</h1>} />
+					</Route>
+					<Route path="*" element={<NotFound />} />
+				</Route>
+			</Routes>
+		</BrowserRouter>
+	);
 }
 
 export default AppBrowserRouter;
