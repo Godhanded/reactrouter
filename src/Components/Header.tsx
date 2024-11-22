@@ -1,5 +1,6 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import AvatarUrl from "../Assets/images/avatar-icon.png";
 
 const Header = () => {
   return (
@@ -26,6 +27,16 @@ const Header = () => {
         >
           Vans
         </NavLink>
+        <Link to="login" className="login-link">
+          <img src={AvatarUrl} className="login-icon" />
+        </Link>
+        <button
+          onClick={() => {
+            localStorage.removeItem("loggedIn");
+          }}
+        >
+          X
+        </button>
       </nav>
     </header>
   );

@@ -1,0 +1,8 @@
+{
+    "bracketSpacing": true,
+    "jsxSingleQuote": false,
+    "semi": true,
+    "singleQuote": false,
+    "useTabs": true,
+    "braceStyle": "stroustrup"
+}

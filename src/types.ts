@@ -13,3 +13,20 @@ export type Error = {
   statusText: string;
   status: number;
 };
+
+export type User = {
+  id: string;
+  email: string;
+  password: string;
+  name: string;
+};
+
+export type UserLoginRequest = {
+  email: string;
+  password: string;
+};
+
+export type LoginResponse = {
+  user: User;
+  token: string;
+};

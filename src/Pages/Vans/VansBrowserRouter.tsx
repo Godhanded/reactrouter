@@ -1,23 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../Styles/Vans.css";
-import {
-  Link,
-  useSearchParams,
-  useLoaderData,
-  LoaderFunctionArgs,
-} from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Van } from "../../types";
 import { getVans } from "../../Api";
-import { requiresAuth } from "../../utils";
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  return requiresAuth(request) ?? (await getVans());
-};
-const Vans = () => {
-  const vans = useLoaderData() as Van[];
+const VansBrowserRouter = () => {
+  const [vans, setVans] = useState<Van[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<any>(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const typeFilter = searchParams.get("type");
+
+  useEffect(() => {
+    const loadVans = async () => {
+      setLoading(true);
+      try {
+        const data = await getVans();
+        setVans(() => data as Van[]);
+      } catch (e) {
+        console.log(e);
+        setError(e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadVans();
+  }, []);
 
   const handleFilterChange = (key: string, value: string | null): void => {
     setSearchParams((prevParams) => {
@@ -54,6 +63,12 @@ const Vans = () => {
     </div>
   ));
 
+  if (loading) {
+    return <h1 aria-live="polite">Loading...</h1>;
+  }
+  if (error) {
+    return <h1 aria-live="assertive">there was an error: {error.message} </h1>;
+  }
   return (
     <div className="van-list-container">
       <h1>Explore our Van Options</h1>
@@ -109,4 +124,4 @@ const Vans = () => {
   );
 };
 
-export default Vans;
+export default VansBrowserRouter;

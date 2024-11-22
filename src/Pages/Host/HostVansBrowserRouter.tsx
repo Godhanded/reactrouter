@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Van } from "../../types";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../../Styles/HostVans.css";
-import { getHostVans } from "../../Api";
-import { requiresAuth } from "../../utils";
-
-export const loader = async () => await getHostVans();
-
-const HostVans = () => {
-  const vans = useLoaderData() as Van[];
+const HostVansBrowserRouter = () => {
+  const [vans, setVans] = useState<Van[] | null>(null);
+  const getHostVans = async (): Promise<Van[] | null> => {
+    const response = await fetch("/api/host/vans");
+    return (await response.json())?.vans as Van[];
+  };
+  useEffect(() => {
+    getHostVans().then((vans) => setVans(vans));
+  }, []);
 
   const vanList = vans?.map((van) => (
     <Link to={`${van.id}`} key={van.id} className="host-van-link-wrapper">
@@ -25,10 +27,10 @@ const HostVans = () => {
     <section>
       <h1 className="host-vans-title">Your listed vans</h1>
       <div className="host-vans-list">
-        <section>{vanList}</section>
+        {vans ? <section>{vanList}</section> : <h2>Loading...</h2>}
       </div>
     </section>
   );
 };
 
-export default HostVans;
+export default HostVansBrowserRouter;
