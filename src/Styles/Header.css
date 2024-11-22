@@ -32,3 +32,8 @@ nav {
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
 }
+
+header .login-icon {
+  height: 18px;
+  width: 18px;
+}

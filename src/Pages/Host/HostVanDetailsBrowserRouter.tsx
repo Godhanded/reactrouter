@@ -1,25 +1,22 @@
-import React from "react";
-import {
-  Link,
-  LoaderFunctionArgs,
-  Outlet,
-  useLoaderData,
-  useOutletContext,
-} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, Outlet, useOutletContext, useParams } from "react-router-dom";
 import { Van } from "../../types";
 import "../../Styles/HostVanDetail.css";
 import HostNav from "../../Components/HostNav";
-import { getHostVans } from "../../Api";
-import { requiresAuth } from "../../utils";
 
 type ContextType = { van: Van | null };
 
-export const loader = async ({ params, request }: LoaderFunctionArgs) => {
-  return requiresAuth(request) ?? (await getHostVans(params.id));
-};
+const HostVanDetailsBrowserRouter = () => {
+  const { id } = useParams();
+  const [van, setVan] = useState<Van | null>(null);
+  const getHostVans = async (id: string): Promise<Van | null> => {
+    const response = await fetch(`/api/host/vans/${id}`);
+    return (await response.json())?.vans as Van;
+  };
 
-const HostVanDetails = () => {
-  const van = useLoaderData() as Van;
+  useEffect(() => {
+    getHostVans(id!).then((van) => setVan(van));
+  }, [id]);
 
   return (
     <>
@@ -51,7 +48,7 @@ const HostVanDetails = () => {
   );
 };
 
-export default HostVanDetails;
+export default HostVanDetailsBrowserRouter;
 
 export function useVan() {
   return useOutletContext<ContextType>();

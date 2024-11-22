@@ -11,32 +11,62 @@ import Home from "./Pages/Home";
 import About from "./Pages/About";
 import Vans, { loader as vansLoader } from "./Pages/Vans/Vans";
 import "./server";
-import VanDetails from "./Pages/Vans/VanDetails";
+import VanDetails, {
+  loader as vanDetailsLoader,
+} from "./Pages/Vans/VanDetails";
 import Layout from "./Components/Layout";
 import Income from "./Pages/Host/Income";
 import Reviews from "./Pages/Host/Reviews";
 import Dashboard from "./Pages/Host/Dashboard";
 import HostLayout from "./Pages/Host/HostLayout";
-import HostVans from "./Pages/Host/HostVans";
-import HostVanDetails from "./Pages/Host/HostVanDetails";
+import HostVans, { loader as hostVansLoader } from "./Pages/Host/HostVans";
+import HostVanDetails, {
+  loader as hostVanDetailsLoader,
+} from "./Pages/Host/HostVanDetails";
 import VanHostDetail from "./Pages/Host/VanHostDetail";
 import VanPricing from "./Pages/Host/VanPricing";
 import VanPhotos from "./Pages/Host/VanPhotos";
 import NotFound from "./Pages/NotFound";
 import Error from "./Components/Error";
+import Login, {
+  loader as loginLoader,
+  action as loginAction,
+} from "./Pages/Login";
+import { requiresAuth } from "./utils";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Layout />}>
       <Route path="/" element={<Home />} />
       <Route path="About" element={<About />} />
-      <Route path="host" element={<HostLayout />}>
+      <Route
+        path="login"
+        element={<Login />}
+        loader={loginLoader}
+        action={loginAction}
+      />
+      <Route
+        path="host"
+        element={<HostLayout />}
+        loader={async ({ request }) => requiresAuth(request)}
+      >
         <Route index element={<Dashboard />} />
         <Route path="income" element={<Income />} />
         <Route path="reviews" element={<Reviews />} />
-        <Route path="vans" element={<HostVans />} />
+        <Route
+          path="vans"
+          element={<HostVans />}
+          loader={async ({ request }) =>
+            requiresAuth(request) ?? (await hostVansLoader())
+          }
+          errorElement={<Error />}
+        />
 
-        <Route path="vans/:id" element={<HostVanDetails />}>
+        <Route
+          path="vans/:id"
+          element={<HostVanDetails />}
+          loader={hostVanDetailsLoader}
+        >
           <Route index element={<VanHostDetail />} />
           <Route path="pricing" element={<VanPricing />} />
           <Route path="photos" element={<VanPhotos />} />
@@ -48,7 +78,11 @@ const router = createBrowserRouter(
         loader={vansLoader}
         errorElement={<Error />}
       />
-      <Route path="/vans/:id" element={<VanDetails />} />
+      <Route
+        path="/vans/:id"
+        element={<VanDetails />}
+        loader={vanDetailsLoader}
+      />
       {/* <Route path="vans">
             <Route index element={<Vans />} />
             <Route path=":id" element={<VanDetail />} />
