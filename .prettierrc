@@ -3,6 +3,5 @@
     "jsxSingleQuote": false,
     "semi": true,
     "singleQuote": false,
-    "useTabs": true,
-    "braceStyle": "stroustrup"
+    "useTabs": true
 }

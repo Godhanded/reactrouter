@@ -1,39 +1,39 @@
 nav {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  color: black;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	color: black;
 }
 
 .Logo {
-  font-family: Inter;
-  font-size: 25.35px;
-  font-weight: 900;
-  line-height: 40.27px;
-  text-align: left;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
+	font-family: Inter;
+	font-size: 25.35px;
+	font-weight: 900;
+	line-height: 40.27px;
+	text-align: left;
+	text-underline-position: from-font;
+	text-decoration-skip-ink: none;
 }
 
 .LinkDivs {
-  color: black;
-  justify-content: space-between;
-  display: flex;
-  flex-direction: row;
+	color: black;
+	justify-content: space-between;
+	display: flex;
+	flex-direction: row;
 }
 
 .LinkDivs > a {
-  margin: 2px;
-  font-family: Inter;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 22.92px;
-  text-align: right;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
+	margin: 2px;
+	font-family: Inter;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 22.92px;
+	text-align: right;
+	text-underline-position: from-font;
+	text-decoration-skip-ink: none;
 }
 
 header .login-icon {
-  height: 18px;
-  width: 18px;
+	height: 18px;
+	width: 18px;
 }
