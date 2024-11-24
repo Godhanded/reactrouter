@@ -29,7 +29,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 	const pathName = new URL(request.url).searchParams.get("redirectTo") || "/";
 	try {
-		const data = await loginUser({ email, password } as UserLoginRequest);
+		await loginUser({ email, password } as UserLoginRequest);
 		localStorage.setItem("loggedIn", "true");
 		const response = redirect(pathName);
 		(response as any).body = true;
