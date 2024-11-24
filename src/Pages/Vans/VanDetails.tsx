@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Suspense } from "react";
 import {
+	Await,
 	Link,
 	LoaderFunctionArgs,
 	useLoaderData,
@@ -7,15 +8,15 @@ import {
 } from "react-router-dom";
 import { Van } from "../../types";
 import "../../Styles/VanDetails.css";
-import { getVans } from "../../Api";
+import { getVan } from "../../Api";
 import { requiresAuth } from "../../utils";
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
-	return requiresAuth(request) ?? (await getVans(params.id));
+	return requiresAuth(request) ?? { van: getVan(params.id!) };
 };
 
 const VanDetails = () => {
-	const van = useLoaderData() as Van;
+	const vanPromise = useLoaderData() as { van: Van };
 	const location = useLocation();
 
 	const filters: string = location.state?.filter || "";
@@ -26,17 +27,22 @@ const VanDetails = () => {
 			<Link to={`..${filters}`} relative="path" className="back-button">
 				&larr; <span>Back to {type} vans</span>
 			</Link>
-
-			<div className="van-detail">
-				<img src={van.imageUrl} alt={`${van.name}`} />
-				<i className={`van-type ${van.type} selected`}>{van.type}</i>
-				<h2>{van.name}</h2>
-				<p className="van-price">
-					<span>${van.price}</span>/day
-				</p>
-				<p>{van.description}</p>
-				<button className="link-button">Rent this van</button>
-			</div>
+			<Suspense fallback={<h2>Loading Van...</h2>}>
+				<Await resolve={vanPromise.van}>
+					{(van: Van) => (
+						<div className="van-detail">
+							<img src={van.imageUrl} alt={`${van.name}`} />
+							<i className={`van-type ${van.type} selected`}>{van.type}</i>
+							<h2>{van.name}</h2>
+							<p className="van-price">
+								<span>${van.price}</span>/day
+							</p>
+							<p>{van.description}</p>
+							<button className="link-button">Rent this van</button>
+						</div>
+					)}
+				</Await>
+			</Suspense>
 		</div>
 	);
 };

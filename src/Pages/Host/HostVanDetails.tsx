@@ -9,13 +9,13 @@ import {
 import { Van } from "../../types";
 import "../../Styles/HostVanDetail.css";
 import HostNav from "../../Components/HostNav";
-import { getHostVans } from "../../Api";
+import { getHostVan } from "../../Api";
 import { requiresAuth } from "../../utils";
 
 type ContextType = { van: Van | null };
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
-	return requiresAuth(request) ?? (await getHostVans(params.id));
+	return requiresAuth(request) ?? (await getHostVan(params.id!));
 };
 
 const HostVanDetails = () => {

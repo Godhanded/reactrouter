@@ -28,7 +28,7 @@ const Header = () => {
 					Vans
 				</NavLink>
 				<Link to="login" className="login-link">
-					<img src={AvatarUrl} className="login-icon" />
+					<img src={AvatarUrl} alt="Avatar" className="login-icon" />
 				</Link>
 				<button
 					onClick={() => {

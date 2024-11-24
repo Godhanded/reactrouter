@@ -17,7 +17,7 @@ import VanDetails, {
 import Layout from "./Components/Layout";
 import Income from "./Pages/Host/Income";
 import Reviews from "./Pages/Host/Reviews";
-import Dashboard from "./Pages/Host/Dashboard";
+import Dashboard, { loader as dashboardLoader } from "./Pages/Host/Dashboard";
 import HostLayout from "./Pages/Host/HostLayout";
 import HostVans, { loader as hostVansLoader } from "./Pages/Host/HostVans";
 import HostVanDetails, {
@@ -50,7 +50,7 @@ const router = createBrowserRouter(
 				element={<HostLayout />}
 				loader={async ({ request }) => requiresAuth(request)}
 			>
-				<Route index element={<Dashboard />} />
+				<Route index element={<Dashboard />} loader={dashboardLoader} />
 				<Route path="income" element={<Income />} />
 				<Route path="reviews" element={<Reviews />} />
 				<Route
@@ -82,6 +82,7 @@ const router = createBrowserRouter(
 				path="/vans/:id"
 				element={<VanDetails />}
 				loader={vanDetailsLoader}
+				errorElement={<Error />}
 			/>
 			{/* <Route path="vans">
             <Route index element={<Vans />} />
